@@ -58,7 +58,11 @@ func (s *Server) register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s.userRepository.Store(user)
+	if err = s.userRepository.Store(user); err != nil {
+		http.Error(w, "could not store user"+err.Error(), http.StatusInternalServerError)
+		return
+
+	}
 
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Add("id", user.ID)
@@ -69,7 +73,7 @@ func (s *Server) register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write(jwtByteArr)
+	_, _ = w.Write(jwtByteArr)
 }
 
 func (s *Server) login(w http.ResponseWriter, r *http.Request) {
@@ -106,7 +110,7 @@ func (s *Server) login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write(jwtByteArr)
+	_, _ = w.Write(jwtByteArr)
 }
 
 func (s *Server) generateJwt(email string) (*jwt.Token, error) {

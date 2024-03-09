@@ -24,7 +24,7 @@ type service struct {
 var (
 	host = os.Getenv("DB_HOST")
 	port = os.Getenv("DB_PORT")
-	//database = os.Getenv("DB_DATABASE")
+	// database = os.Getenv("DB_DATABASE")
 )
 
 func New() Service {
@@ -49,6 +49,7 @@ func (s *service) Health() map[string]string {
 
 	err := s.db.Ping(ctx, nil)
 	if err != nil {
+		// nolint: gocritic
 		log.Fatalf(fmt.Sprintf("db down: %v", err))
 	}
 
