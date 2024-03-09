@@ -19,20 +19,26 @@ type Server struct {
 
 	db             database.Service
 	userRepository domain.IUserRepository
+	jwtRepository  domain.IJwtRepository
 }
 
 func NewServer() *http.Server {
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
 
+	// TODO: Do I need this database service?
 	dbService := database.New()
 
-	userRepository := infrastructure.NewUserRepository(dbService.GetClient())
+	mongoClient := dbService.GetClient()
+
+	userRepository := infrastructure.NewUserRepository(mongoClient)
+	jwtRepository := infrastructure.NewJwtRepository(mongoClient)
 
 	NewServer := &Server{
 		port: port,
 
 		db:             database.New(),
 		userRepository: userRepository,
+		jwtRepository:  jwtRepository,
 	}
 
 	// Declare Server config

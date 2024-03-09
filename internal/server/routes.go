@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/golang-jwt/jwt"
 	json "github.com/json-iterator/go"
 )
 
@@ -50,10 +51,25 @@ func (s *Server) register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	user := domain.NewUser(req.Email, req.Password, req.Authority)
+
+	jwt, err := s.generateJwt(user.Email)
+	if err != nil {
+		http.Error(w, "could not generate jwt"+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	s.userRepository.Store(user)
 
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Add("id", user.ID)
+
+	jwtByteArr, err := json.Marshal(jwt)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Write(jwtByteArr)
 }
 
 func (s *Server) login(w http.ResponseWriter, r *http.Request) {
@@ -76,9 +92,33 @@ func (s *Server) login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: generate token
-
 	w.WriteHeader(http.StatusOK)
-	w.Header().Add("id", user.ID)
 
+	jwt, err := s.generateJwt(user.Email)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	jwtByteArr, err := json.Marshal(jwt)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Write(jwtByteArr)
+}
+
+func (s *Server) generateJwt(email string) (*jwt.Token, error) {
+	jwt, err := domain.NewJwt(email)
+	if err != nil {
+		return nil, err
+	}
+
+	err = s.jwtRepository.Store(jwt)
+	if err != nil {
+		return nil, err
+	}
+
+	return jwt, nil
 }
