@@ -2,7 +2,6 @@ package server
 
 import (
 	"auth-api/internal/application"
-	"log"
 	"log/slog"
 	"net/http"
 
@@ -15,7 +14,6 @@ func (s *Server) RegisterRoutes() http.Handler {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
-	r.Get("/", s.HelloWorldHandler)
 	r.Get("/health", s.healthHandler)
 
 	r.Post("/register", s.register)
@@ -24,23 +22,13 @@ func (s *Server) RegisterRoutes() http.Handler {
 	return r
 }
 
-func (s *Server) HelloWorldHandler(w http.ResponseWriter, r *http.Request) {
-	resp := make(map[string]string)
-	resp["message"] = "Hello World"
-
-	jsonResp, err := json.Marshal(resp)
-	if err != nil {
-		log.Fatalf("error handling JSON marshal. Err: %v", err)
-	}
-
-	_, _ = w.Write(jsonResp)
-}
-
 func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
 	jsonResp, _ := json.Marshal(s.db.Health())
 	_, _ = w.Write(jsonResp)
 }
 
+// TODO: check status codes
+// TODO: validations
 func (s *Server) register(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	req := &application.UserRegisterRequest{}
@@ -70,6 +58,8 @@ func (s *Server) register(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(jwtByteArr)
 }
 
+// TODO: check status codes
+// TODO: validations
 func (s *Server) login(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 

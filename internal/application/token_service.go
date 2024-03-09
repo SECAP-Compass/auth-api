@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 )
 
 type TokenService struct {
@@ -18,9 +19,14 @@ func NewTokenService(userRepository domain.IUserRepository, jtiRepository domain
 		jtiRepository:  jtiRepository,
 	}
 }
+
 func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (*domain.Jwt, error) {
 	user := domain.NewUser(r.Email, r.Password, r.Authority)
 	ctx = context.WithValue(ctx, "user", user)
+
+	if _, err := s.userRepository.FindByEmail(ctx, r.Email); err == nil {
+		return nil, fmt.Errorf("user already exists with email %s", r.Email)
+	}
 
 	jwt, err := s.generateJwt(ctx)
 	if err != nil {
@@ -41,6 +47,7 @@ func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (*d
 func (s *TokenService) Login(ctx context.Context, r *UserLoginRequest) (*domain.Jwt, error) {
 	user, err := s.userRepository.FindByEmail(ctx, r.Email)
 	if err != nil {
+		slog.Error("Error finding user by email", slog.String("email", r.Email))
 		return nil, err
 	}
 
@@ -48,6 +55,11 @@ func (s *TokenService) Login(ctx context.Context, r *UserLoginRequest) (*domain.
 
 	if !user.ComparePassword(r.Password) {
 		return nil, fmt.Errorf("invalid password")
+	}
+
+	jti, err := s.jtiRepository.FindByUserID(ctx, user.ID)
+	if err == nil { // If there is no error, there is a jti record for this user
+		s.jtiRepository.Delete(ctx, jti.Id)
 	}
 
 	jwt, err := s.generateJwt(ctx)

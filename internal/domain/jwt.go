@@ -13,7 +13,7 @@ type Claims struct {
 }
 
 type JtiRecord struct {
-	Id              string `json:"id" bson:"id"`
+	Id              string `json:"id" bson:"_id"`
 	Email           string `json:"email" bson:"email"`
 	UserId          string `json:"userId" bson:"userId"`
 	ExpireTimeStamp int64  `json:"expireTimeStamp" bson:"expireTimeStamp"`

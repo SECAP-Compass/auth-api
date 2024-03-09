@@ -16,7 +16,9 @@ type IUserRepository interface {
 type IJtiRecordRepository interface {
 	// Query
 	FindByID(context.Context, string) (*JtiRecord, error)
+	FindByUserID(context.Context, string) (*JtiRecord, error)
 
 	// Command
 	Store(context.Context, *JtiRecord) error
+	Delete(context.Context, string) error
 }

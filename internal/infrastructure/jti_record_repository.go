@@ -13,7 +13,7 @@ type JtiRecordRepository struct {
 	c *mongo.Collection
 }
 
-const JWT_COLLECTION = "jwts"
+const JWT_COLLECTION = "jtis"
 
 func NewJtiRecordRepository(db *mongo.Database) domain.IJtiRecordRepository {
 	c := db.Collection(JWT_COLLECTION)
@@ -24,7 +24,7 @@ func NewJtiRecordRepository(db *mongo.Database) domain.IJtiRecordRepository {
 }
 
 func (r *JtiRecordRepository) FindByID(ctx context.Context, jti string) (*domain.JtiRecord, error) {
-	filter := bson.M{"id": jti} // Is there a better way to do this? :)
+	filter := bson.M{"_id": jti} // Is there a better way to do this? :)
 	result := r.c.FindOne(ctx, filter)
 	if result.Err() != nil {
 		return nil, result.Err()
@@ -39,7 +39,38 @@ func (r *JtiRecordRepository) FindByID(ctx context.Context, jti string) (*domain
 	return jwt, nil
 }
 
+func (r *JtiRecordRepository) FindByUserID(ctx context.Context, userId string) (*domain.JtiRecord, error) {
+	filter := bson.M{"userId": userId}
+	result := r.c.FindOne(ctx, filter)
+	if result.Err() != nil {
+		return nil, result.Err()
+	}
+
+	jti, err := r.parseJti(result)
+	if err != nil {
+		return nil, err
+	}
+
+	return jti, nil
+}
+
 func (r *JtiRecordRepository) Store(ctx context.Context, record *domain.JtiRecord) error {
 	_, err := r.c.InsertOne(ctx, record)
 	return err
+}
+
+func (r *JtiRecordRepository) Delete(ctx context.Context, jti string) error {
+	filter := bson.M{"_id": jti}
+	_, err := r.c.DeleteOne(ctx, filter)
+	return err
+}
+
+func (r *JtiRecordRepository) parseJti(result *mongo.SingleResult) (*domain.JtiRecord, error) {
+	jti := &domain.JtiRecord{}
+	err := result.Decode(jti)
+	if err != nil {
+		return nil, err
+	}
+
+	return jti, nil
 }

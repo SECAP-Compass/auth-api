@@ -33,7 +33,7 @@ func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*domain
 }
 
 func (r *UserRepository) FindByID(ctx context.Context, id string) (*domain.User, error) {
-	filter := bson.M{"id": id}
+	filter := bson.M{"_id": id}
 	result := r.c.FindOne(ctx, filter)
 
 	if result == nil {
@@ -58,7 +58,7 @@ func (r *UserRepository) Update(ctx context.Context, user *domain.User) error {
 }
 
 func (r *UserRepository) Delete(ctx context.Context, id string) error {
-	filter := bson.M{"id": id}
+	filter := bson.M{"_id": id}
 	_, err := r.c.DeleteOne(ctx, filter)
 	return err
 }
