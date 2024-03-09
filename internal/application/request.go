@@ -1,4 +1,4 @@
-package server
+package application
 
 type UserRegisterRequest struct {
 	Email     string `json:"email"`

@@ -9,17 +9,16 @@ import (
 
 	_ "github.com/joho/godotenv/autoload"
 
+	"auth-api/internal/application"
 	"auth-api/internal/database"
-	"auth-api/internal/domain"
 	"auth-api/internal/infrastructure"
 )
 
 type Server struct {
 	port int
 
-	db             database.Service
-	userRepository domain.IUserRepository
-	jwtRepository  domain.IJwtRepository
+	db           database.Service
+	tokenService *application.TokenService
 }
 
 func NewServer() *http.Server {
@@ -27,21 +26,24 @@ func NewServer() *http.Server {
 
 	// TODO: Do I need this database service?
 	dbService := database.New()
+	if err := dbService.Health(); err != nil {
+		panic(err)
+	}
 
-	mongoClient := dbService.GetClient()
+	db := dbService.GetDatabase()
 
-	userRepository := infrastructure.NewUserRepository(mongoClient)
-	jwtRepository := infrastructure.NewJwtRepository(mongoClient)
+	userRepository := infrastructure.NewUserRepository(db)
+	jwtRepository := infrastructure.NewJtiRecordRepository(db)
+
+	tokenService := application.NewTokenService(userRepository, jwtRepository)
 
 	NewServer := &Server{
 		port: port,
 
-		db:             database.New(),
-		userRepository: userRepository,
-		jwtRepository:  jwtRepository,
+		db:           database.New(),
+		tokenService: tokenService,
 	}
 
-	// Declare Server config
 	server := &http.Server{
 		Addr:         fmt.Sprintf(":%d", NewServer.port),
 		Handler:      NewServer.RegisterRoutes(),
