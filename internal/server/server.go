@@ -10,20 +10,29 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 
 	"auth-api/internal/database"
+	"auth-api/internal/domain"
+	"auth-api/internal/infrastructure"
 )
 
 type Server struct {
 	port int
 
-	db database.Service
+	db             database.Service
+	userRepository domain.IUserRepository
 }
 
 func NewServer() *http.Server {
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
+
+	dbService := database.New()
+
+	userRepository := infrastructure.NewUserRepository(dbService.GetClient())
+
 	NewServer := &Server{
 		port: port,
 
-		db: database.New(),
+		db:             database.New(),
+		userRepository: userRepository,
 	}
 
 	// Declare Server config

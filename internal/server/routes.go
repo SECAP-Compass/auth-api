@@ -1,12 +1,13 @@
 package server
 
 import (
-	"encoding/json"
+	"auth-api/internal/domain"
 	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	json "github.com/json-iterator/go"
 )
 
 func (s *Server) RegisterRoutes() http.Handler {
@@ -14,8 +15,10 @@ func (s *Server) RegisterRoutes() http.Handler {
 	r.Use(middleware.Logger)
 
 	r.Get("/", s.HelloWorldHandler)
-
 	r.Get("/health", s.healthHandler)
+
+	r.Post("/register", s.register)
+	r.Post("/login", s.login)
 
 	return r
 }
@@ -35,4 +38,47 @@ func (s *Server) HelloWorldHandler(w http.ResponseWriter, r *http.Request) {
 func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
 	jsonResp, _ := json.Marshal(s.db.Health())
 	_, _ = w.Write(jsonResp)
+}
+
+func (s *Server) register(w http.ResponseWriter, r *http.Request) {
+	var req *UserRegisterRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	defer r.Body.Close()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	user := domain.NewUser(req.Email, req.Password, req.Authority)
+	s.userRepository.Store(user)
+
+	w.WriteHeader(http.StatusCreated)
+	w.Header().Add("id", user.ID)
+}
+
+func (s *Server) login(w http.ResponseWriter, r *http.Request) {
+	var req *UserLoginRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	defer r.Body.Close()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	user, err := s.userRepository.FindByEmail(req.Email)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	if !user.ComparePassword(req.Password) {
+		http.Error(w, "invalid password", http.StatusUnauthorized)
+		return
+	}
+
+	// TODO: generate token
+
+	w.WriteHeader(http.StatusOK)
+	w.Header().Add("id", user.ID)
+
 }
