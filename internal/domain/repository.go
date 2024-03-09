@@ -1,22 +1,22 @@
 package domain
 
-import "github.com/golang-jwt/jwt"
+import "context"
 
 type IUserRepository interface {
 	// Query
-	FindByEmail(email string) (*User, error)
-	FindByID(id string) (*User, error)
+	FindByEmail(context.Context, string) (*User, error)
+	FindByID(context.Context, string) (*User, error)
 
 	// Command
-	Store(user *User) error
-	Update(user *User) error
-	Delete(id string) error
+	Store(context.Context, *User) error
+	Update(context.Context, *User) error
+	Delete(context.Context, string) error
 }
 
-type IJwtRepository interface {
+type IJtiRecordRepository interface {
 	// Query
-	FindByID(jti string) (*jwt.Token, error)
+	FindByID(context.Context, string) (*JtiRecord, error)
 
 	// Command
-	Store(jwt *jwt.Token) error
+	Store(context.Context, *JtiRecord) error
 }

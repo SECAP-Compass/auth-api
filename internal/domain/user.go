@@ -6,10 +6,10 @@ import (
 )
 
 type User struct {
-	ID        string `json:"id" protobuf:"bytes,1,opt,name=id"`
-	Email     string `json:"email" protobuf:"bytes,2,opt,name=email"`
-	Password  string `json:"password" protobuf:"bytes,3,opt,name=password"`
-	Authority string `json:"authority" protobuf:"bytes,5,opt,name=authority"`
+	ID        string `json:"id" bson:"id"`
+	Email     string `json:"email" bson:"email"`
+	Password  string `json:"password" bson:"password"`
+	Authority string `json:"authority" bson:"authority"`
 }
 
 func NewUser(email, password, authority string) *User {
@@ -25,8 +25,8 @@ func NewUser(email, password, authority string) *User {
 }
 
 func (u *User) ComparePassword(password string) bool {
-	cryptedPassword := bcrpytPassword(password)
-	return u.Password == cryptedPassword
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
+	return err == nil
 }
 
 func bcrpytPassword(password string) string {
