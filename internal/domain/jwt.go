@@ -40,19 +40,19 @@ func NewJwt(email string) (*jwt.Token, error) {
 	), nil
 }
 
-func (Jwt *Jwt) String() string {
-	tokenString, _ := Jwt.Jwt.SignedString([]byte("secret"))
-
+func (j *Jwt) String() string {
+	tokenString, _ := j.Jwt.SignedString([]byte("secret"))
 	return tokenString
 }
 
-func (Jwt *Jwt) ToResponse() map[string]string {
-	c := Jwt.Jwt.Claims.(*jwt.StandardClaims)
+func (j *Jwt) ToResponse() map[string]string {
+	c := j.Jwt.Claims.(*jwt.StandardClaims)
 
 	return map[string]string{
-		"access_token": Jwt.String(),
+		"access_token": j.String(),
 		"issuedAt":     strconv.FormatInt(c.IssuedAt, 10),
 		"expiresAt":    strconv.FormatInt(c.ExpiresAt, 10),
+		"type":         "Bearer",
 	}
 }
 
