@@ -35,7 +35,7 @@ func New() Service {
 		options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s", host, port)),
 		options.Client().SetAuth(options.Credential{
 			Username: os.Getenv("DB_USERNAME"),
-			Password: os.Getenv("DB_PASSWORD"),
+			Password: os.Getenv("DB_ROOT_PASSWORD"),
 		}),
 	)
 	if err != nil {

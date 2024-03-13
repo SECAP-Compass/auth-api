@@ -2,11 +2,13 @@ package server
 
 import (
 	"auth-api/internal/application"
+	"fmt"
 	"log/slog"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	validation "github.com/go-playground/validator/v10"
 	json "github.com/json-iterator/go"
 )
 
@@ -16,8 +18,8 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	r.Get("/health", s.healthHandler)
 
-	r.Post("/register", s.register)
-	r.Post("/login", s.login)
+	r.Post("/register", s.Register)
+	r.Post("/login", s.Login)
 
 	return r
 }
@@ -28,14 +30,20 @@ func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // TODO: check status codes
-// TODO: validations
-func (s *Server) register(w http.ResponseWriter, r *http.Request) {
+// TODO: a conventional respone structure
+func (s *Server) Register(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	req := &application.UserRegisterRequest{}
 	err := json.NewDecoder(r.Body).Decode(req)
 	defer r.Body.Close()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	if err = s.Validator.Struct(req); err != nil {
+		errors := err.(validation.ValidationErrors)
+		http.Error(w, fmt.Sprintf("validation errors: %s", errors), http.StatusBadRequest)
 		return
 	}
 
@@ -59,8 +67,8 @@ func (s *Server) register(w http.ResponseWriter, r *http.Request) {
 }
 
 // TODO: check status codes
-// TODO: validations
-func (s *Server) login(w http.ResponseWriter, r *http.Request) {
+// TODO: a conventional respone structure
+func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	req := &application.UserLoginRequest{}
@@ -69,6 +77,12 @@ func (s *Server) login(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		slog.Error("Error decoding login request")
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	if err = s.Validator.Struct(req); err != nil {
+		errors := err.(validation.ValidationErrors)
+		http.Error(w, fmt.Sprintf("validation errors: %s", errors), http.StatusBadRequest)
 		return
 	}
 

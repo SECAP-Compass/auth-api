@@ -1,0 +1,10 @@
+linters:
+  disable-all: true
+  enable:
+  - errcheck
+  - gocritic 
+  - gosec 
+  - nakedret 
+  - staticcheck
+  - typecheck
+
