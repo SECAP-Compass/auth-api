@@ -1,23 +1,22 @@
 package domain
 
 import (
-	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type User struct {
-	ID        string `json:"id" bson:"_id"`
-	Email     string `json:"email" bson:"email"`
-	Password  string `json:"password" bson:"password"`
-	Authority string `json:"authority" bson:"authority"`
+	gorm.Model
+
+	Email     string `json:"email" gorm:"index:unique"`
+	Password  string `json:"password" `
+	Authority string `json:"authority"`
 }
 
 func NewUser(email, password, authority string) *User {
-	id := uuid.New().String()
 
 	cryptedPassword := bcrpytPassword(password)
 	return &User{
-		ID:        id,
 		Email:     email,
 		Password:  cryptedPassword,
 		Authority: authority,

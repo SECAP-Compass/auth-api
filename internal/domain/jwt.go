@@ -6,6 +6,7 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 type Claims struct {
@@ -13,10 +14,12 @@ type Claims struct {
 }
 
 type JtiRecord struct {
-	Id              string `json:"id" bson:"_id"`
-	Email           string `json:"email" bson:"email"`
-	UserId          string `json:"userId" bson:"userId"`
-	ExpireTimeStamp int64  `json:"expireTimeStamp" bson:"expireTimeStamp"`
+	gorm.Model `gorm:"primary_key:Id"`
+
+	Id              string    `json:"id" gorm:"primary_key"`
+	Email           string    `json:"email"`
+	UserId          uint      `json:"userId"`
+	ExpireTimeStamp time.Time `json:"expireTimeStamp"`
 }
 
 // Do I need that?
@@ -56,13 +59,13 @@ func (j *Jwt) ToResponse() map[string]string {
 	}
 }
 
-func NewJtiRecord(j *Jwt, userId string) *JtiRecord {
+func NewJtiRecord(j *Jwt, userId uint) *JtiRecord {
 	c := j.Jwt.Claims.(*jwt.StandardClaims)
 
 	return &JtiRecord{
 		Id:              c.Id,
 		Email:           c.Subject,
 		UserId:          userId,
-		ExpireTimeStamp: c.ExpiresAt,
+		ExpireTimeStamp: time.Unix(c.ExpiresAt, 0),
 	}
 }

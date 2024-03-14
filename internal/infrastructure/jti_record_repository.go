@@ -3,74 +3,74 @@ package infrastructure
 import (
 	"auth-api/internal/domain"
 	"context"
+	"fmt"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
+	"gorm.io/gorm"
 )
 
-// TODO:  Delete expired jwts?
+/*
+ - With this repository implementation, we generate SSO someway.
+*/
+
 type JtiRecordRepository struct {
-	c *mongo.Collection
+	db *gorm.DB
 }
 
-const JWT_COLLECTION = "jtis"
+const JWT_COLLECTION string = "jtis"
 
-func NewJtiRecordRepository(db *mongo.Database) domain.IJtiRecordRepository {
-	c := db.Collection(JWT_COLLECTION)
-
+func NewJtiRecordRepository(db *gorm.DB) domain.IJtiRecordRepository {
+	db.AutoMigrate(&domain.JtiRecord{})
 	return &JtiRecordRepository{
-		c: c,
+		db: db,
 	}
 }
 
 func (r *JtiRecordRepository) FindByID(ctx context.Context, jti string) (*domain.JtiRecord, error) {
-	filter := bson.M{"_id": jti} // Is there a better way to do this? :)
-	result := r.c.FindOne(ctx, filter)
-	if result.Err() != nil {
-		return nil, result.Err()
+	jtiRecord := &domain.JtiRecord{}
+
+	if err := r.db.First(jtiRecord, jti).Error; err != nil {
+		switch err {
+		case gorm.ErrRecordNotFound:
+			return nil, fmt.Errorf("jti.not.found.by.id")
+		default:
+			return nil, err
+		}
 	}
 
-	jwt := &domain.JtiRecord{}
-	err := result.Decode(jwt)
-	if err != nil {
-		return nil, err
-	}
-
-	return jwt, nil
+	return jtiRecord, nil
 }
 
-func (r *JtiRecordRepository) FindByUserID(ctx context.Context, userId string) (*domain.JtiRecord, error) {
-	filter := bson.M{"userId": userId}
-	result := r.c.FindOne(ctx, filter)
-	if result.Err() != nil {
-		return nil, result.Err()
+func (r *JtiRecordRepository) FindByUserID(ctx context.Context, userId uint) (*domain.JtiRecord, error) {
+	jtiRecord := &domain.JtiRecord{}
+
+	if err := r.db.First(jtiRecord, "user_id = ?", userId).Error; err != nil {
+		switch err {
+		case gorm.ErrRecordNotFound:
+			return nil, fmt.Errorf("jti.not.found.by.userId")
+		default:
+			return nil, err
+		}
 	}
 
-	jti, err := r.parseJti(result)
-	if err != nil {
-		return nil, err
-	}
-
-	return jti, nil
+	return jtiRecord, nil
 }
 
 func (r *JtiRecordRepository) Store(ctx context.Context, record *domain.JtiRecord) error {
-	_, err := r.c.InsertOne(ctx, record)
-	return err
+	if err := r.db.Create(record).Error; err != nil {
+		r.db.Rollback()
+		return err
+	}
+
+	return nil
 }
 
 func (r *JtiRecordRepository) Delete(ctx context.Context, jti string) error {
-	filter := bson.M{"_id": jti}
-	_, err := r.c.DeleteOne(ctx, filter)
-	return err
-}
 
-func (r *JtiRecordRepository) parseJti(result *mongo.SingleResult) (*domain.JtiRecord, error) {
-	jti := &domain.JtiRecord{}
-	err := result.Decode(jti)
-	if err != nil {
-		return nil, err
+	// Using Unscoped to delete the record permanently
+	if err := r.db.Unscoped().Delete(&domain.JtiRecord{Id: jti}).Error; err != nil {
+		r.db.Rollback()
+		return err
 	}
 
-	return jti, nil
+	return nil
 }
