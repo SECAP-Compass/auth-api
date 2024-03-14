@@ -5,7 +5,7 @@ import "context"
 type IUserRepository interface {
 	// Query
 	FindByEmail(context.Context, string) (*User, error)
-	FindByID(context.Context, string) (*User, error)
+	FindByID(context.Context, uint) (*User, error)
 
 	// Command
 	Store(context.Context, *User) error
@@ -16,7 +16,7 @@ type IUserRepository interface {
 type IJtiRecordRepository interface {
 	// Query
 	FindByID(context.Context, string) (*JtiRecord, error)
-	FindByUserID(context.Context, string) (*JtiRecord, error)
+	FindByUserID(context.Context, uint) (*JtiRecord, error)
 
 	// Command
 	Store(context.Context, *JtiRecord) error

@@ -5,70 +5,75 @@ import (
 	"context"
 	"fmt"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
+	"gorm.io/gorm"
 )
 
 type UserRepository struct {
-	c *mongo.Collection
+	db *gorm.DB
 }
 
-const USER_COLLECTION = "users"
+const USER_TABLE string = "users"
 
-func NewUserRepository(db *mongo.Database) domain.IUserRepository {
-	c := db.Collection(USER_COLLECTION)
+func NewUserRepository(db *gorm.DB) domain.IUserRepository {
+	db.AutoMigrate(&domain.User{})
 	return &UserRepository{
-		c: c,
+		db: db,
 	}
 }
 
 func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*domain.User, error) {
-	filter := bson.M{"email": email}
-	result := r.c.FindOne(ctx, filter)
-	if result.Err() != nil {
-		return nil, result.Err()
-	}
-
-	return r.parseUser(result)
-}
-
-func (r *UserRepository) FindByID(ctx context.Context, id string) (*domain.User, error) {
-	filter := bson.M{"_id": id}
-	result := r.c.FindOne(ctx, filter)
-
-	if result == nil {
-		return nil, fmt.Errorf("user not found")
-	}
-
-	if result.Err() != nil {
-		return nil, result.Err()
-	}
-
-	return r.parseUser(result)
-}
-
-func (r *UserRepository) Store(ctx context.Context, user *domain.User) error {
-	_, err := r.c.InsertOne(ctx, user)
-	return err
-}
-
-func (r *UserRepository) Update(ctx context.Context, user *domain.User) error {
-	_, err := r.c.UpdateByID(ctx, user.ID, user)
-	return err
-}
-
-func (r *UserRepository) Delete(ctx context.Context, id string) error {
-	filter := bson.M{"_id": id}
-	_, err := r.c.DeleteOne(ctx, filter)
-	return err
-}
-
-func (r *UserRepository) parseUser(result *mongo.SingleResult) (*domain.User, error) {
 	user := &domain.User{}
-	err := result.Decode(user)
-	if err != nil {
-		return nil, err
+
+	if err := r.db.First(user, "email = ?", email).Error; err != nil {
+		switch err {
+		case gorm.ErrRecordNotFound:
+			return nil, fmt.Errorf("user.not.found.by.email")
+		default:
+			return nil, err
+		}
 	}
 
 	return user, nil
+}
+
+func (r *UserRepository) FindByID(ctx context.Context, id uint) (*domain.User, error) {
+	user := &domain.User{}
+
+	if err := r.db.First(user, id).Error; err != nil {
+		switch err {
+		case gorm.ErrRecordNotFound:
+			return nil, fmt.Errorf("user.not.found.by.id")
+		default:
+			return nil, err
+		}
+	}
+
+	return user, nil
+}
+
+func (r *UserRepository) Store(ctx context.Context, user *domain.User) error {
+	if err := r.db.Create(user).Error; err != nil {
+		r.db.Rollback()
+		return err
+	}
+
+	return nil
+}
+
+func (r *UserRepository) Update(ctx context.Context, user *domain.User) error {
+	if err := r.db.Save(user).Error; err != nil {
+		r.db.Rollback()
+		return err
+	}
+
+	return nil
+}
+
+func (r *UserRepository) Delete(ctx context.Context, id string) error {
+	if err := r.db.Delete(&domain.User{}, id).Error; err != nil {
+		r.db.Rollback()
+		return err
+	}
+
+	return nil
 }

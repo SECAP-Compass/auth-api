@@ -23,12 +23,15 @@ func NewTokenService(userRepository domain.IUserRepository, jtiRepository domain
 func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (*domain.Jwt, error) {
 	user := domain.NewUser(r.Email, r.Password, r.Authority)
 
-	// nolint: staticcheck
-	ctx = context.WithValue(ctx, "user", user)
-
 	if _, err := s.userRepository.FindByEmail(ctx, r.Email); err == nil {
 		return nil, fmt.Errorf("user already exists with email %s", r.Email)
 	}
+
+	if err := s.userRepository.Store(ctx, user); err != nil {
+		return nil, err
+	}
+	// nolint: staticcheck
+	ctx = context.WithValue(ctx, "user", user)
 
 	jwt, err := s.generateJwt(ctx)
 	if err != nil {
@@ -36,10 +39,6 @@ func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (*d
 	}
 
 	if err = s.saveJtiRecord(ctx, jwt); err != nil {
-		return nil, err
-	}
-
-	if err = s.userRepository.Store(ctx, user); err != nil {
 		return nil, err
 	}
 
@@ -61,6 +60,7 @@ func (s *TokenService) Login(ctx context.Context, r *UserLoginRequest) (*domain.
 	}
 
 	jti, err := s.jtiRepository.FindByUserID(ctx, user.ID)
+	slog.Error("Error finding jti record by user id", slog.Any("userId", user.ID), slog.Any("error", err))
 	if err == nil { // If there is no error, there is a jti record for this user
 		if err := s.jtiRepository.Delete(ctx, jti.Id); err != nil {
 			return nil, err
@@ -98,9 +98,11 @@ func (s *TokenService) saveJtiRecord(ctx context.Context, jwt *domain.Jwt) error
 	if u == nil {
 		return errors.New("user not found in context")
 	}
+
 	jtiRecord := domain.NewJtiRecord(jwt, u.ID)
 	err := s.jtiRepository.Store(ctx, jtiRecord)
 	if err != nil {
+		slog.Error("Error storing jti record", slog.Any("jtiRecord", jtiRecord))
 		return err
 	}
 

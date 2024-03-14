@@ -2,13 +2,11 @@ package server
 
 import (
 	"auth-api/internal/application"
-	"fmt"
 	"log/slog"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	validation "github.com/go-playground/validator/v10"
 	json "github.com/json-iterator/go"
 )
 
@@ -41,11 +39,11 @@ func (s *Server) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = s.Validator.Struct(req); err != nil {
+	/*if err = s.Validator.Struct(req); err != nil {
 		errors := err.(validation.ValidationErrors)
 		http.Error(w, fmt.Sprintf("validation errors: %s", errors), http.StatusBadRequest)
 		return
-	}
+	}*/
 
 	jwt, err := s.tokenService.Register(ctx, req)
 	if err != nil {
@@ -80,15 +78,17 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = s.Validator.Struct(req); err != nil {
-		errors := err.(validation.ValidationErrors)
-		http.Error(w, fmt.Sprintf("validation errors: %s", errors), http.StatusBadRequest)
-		return
-	}
+	/*
+		if err = s.Validator.Struct(req); err != nil {
+			errors := err.(validation.ValidationErrors)
+			http.Error(w, fmt.Sprintf("validation errors: %s", errors), http.StatusBadRequest)
+			return
+		}
+	*/
 
 	jwt, err := s.tokenService.Login(ctx, req)
 	if err != nil {
-		slog.Error("Error logging in user")
+		slog.Error("Error logging in user", slog.Any("error", err))
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
