@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"log/slog"
 	"net/http"
 	"os"
 	"strconv"
@@ -9,6 +10,7 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/lmittmann/tint"
 
 	"auth-api/internal/application"
 	"auth-api/internal/database"
@@ -33,6 +35,7 @@ func NewServer() *http.Server {
 		panic(err)
 	}
 
+	// Persistence layer
 	db := dbService.GetDatabase()
 
 	userQueryRepository := infrastructure.NewUserQueryRepository(db)
@@ -40,11 +43,16 @@ func NewServer() *http.Server {
 	jtiRecordQueryRepository := infrastructure.NewJtiRecordQueryRepository(db)
 	jtiRecordCommandRepository := infrastructure.NewJtiRecordCommandRepository(db)
 
+	// Application layer
 	tokenService := application.NewTokenService(userQueryRepository, userCommandRepository, jtiRecordQueryRepository, jtiRecordCommandRepository)
 
-	NewServer := &Server{
-		port: port,
+	// Logger
+	loggerHandler := tint.NewHandler(os.Stdout, &tint.Options{AddSource: true})
+	logger := slog.New(loggerHandler)
+	slog.SetDefault(logger)
 
+	NewServer := &Server{
+		port:         port,
 		db:           database.New(),
 		tokenService: tokenService,
 		Validator:    validator.New(validator.WithRequiredStructEnabled()),

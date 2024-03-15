@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-
 	server := server.NewServer()
 
 	slog.Info("Server is running on:", slog.String("port", server.Addr))
