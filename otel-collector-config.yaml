@@ -5,7 +5,11 @@ receivers:
         endpoint: 0.0.0.0:4318
 
 exporters:
-  jaeger:
-    endpoint: http://jaeger:14268/api/traces
-  jaeger2:
-    endpoint: http://jaeger:4318/api/traces
+  otlp/jaeger: 
+    endpoint: "jaeger:4317" 
+    tls:
+      insecure: true
+  otlp/jaeger2: 
+    endpoint: "jaeger:4318" 
+    tls:
+      insecure: true

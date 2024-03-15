@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"os"
 	"time"
 
 	"go.opentelemetry.io/otel"
@@ -27,7 +28,7 @@ func initTracer() {
 	// Create the exporter - let's use a stdout exporter
 
 	client := otlptracehttp.NewClient(
-		otlptracehttp.WithEndpoint("localhost:4317"),
+		otlptracehttp.WithEndpoint(os.Getenv("OTLP_ENDPOINT")),
 		otlptracehttp.WithInsecure(),
 		otlptracehttp.WithCompression(otlptracehttp.NoCompression))
 	traceExporter, err := otlptrace.New(ctx, client)

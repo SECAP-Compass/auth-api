@@ -2,6 +2,7 @@ package application
 
 import (
 	"auth-api/internal/domain"
+	"auth-api/internal/util"
 	"context"
 	"errors"
 	"fmt"
@@ -31,6 +32,9 @@ func NewTokenService(
 }
 
 func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (*domain.Jwt, error) {
+	_, span := util.StartSpan(ctx)
+	defer span.End()
+
 	user := domain.NewUser(r.Email, r.Password, r.Authority)
 
 	if _, err := s.userQueryRepository.FindByEmail(ctx, r.Email); err == nil {
@@ -56,6 +60,9 @@ func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (*d
 }
 
 func (s *TokenService) Login(ctx context.Context, r *UserLoginRequest) (*domain.Jwt, error) {
+	_, span := util.StartSpan(ctx)
+	defer span.End()
+
 	user, err := s.userQueryRepository.FindByEmail(ctx, r.Email)
 	if err != nil {
 		slog.Error("Error finding user by email", slog.String("email", r.Email))

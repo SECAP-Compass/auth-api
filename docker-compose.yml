@@ -2,33 +2,24 @@ version: '3.8'
 
 
 services:
-  #mongo:
-  #  image: mongo:latest
-  #  environment:
-  #    MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
-  #    MONGO_INITDB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-  #    MONGO_AUTH: true
-  #  ports:
-  #    - "${DB_PORT}:27017"
-  #  volumes:
-  #    - mongo_volume:/data/db
-
-  # auth-api:
-  #   build:
-  #     context: .
-  #     target: final
-  #   ports:
-  #     - 8080:8080
-  #   environment:
-  #     - DB_HOST=postgres
-  #     - DB_PORT=5432
-  #     - DB_USERNAME=admin
-  #     - DB_PASSWORD=admin
-  #     - DB_DATABASE=postgres
-  #     - PORT=8080
-  #     - APP_ENV=local
+  auth-api:
+    build:
+      context: .
+      target: final
       
-
+    ports:
+      - 8080:8080
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=admin
+      - DB_PASSWORD=admin
+      - DB_DATABASE=postgres
+      - PORT=8080
+      - APP_ENV=local
+      - OTLP_ENDPOINT=jaeger:4318
+  
+  ## How to use otel-collector?
   otel-collector:
     image: otel/opentelemetry-collector-dev:latest
     ports:
@@ -40,39 +31,8 @@ services:
     container_name: jaeger
     environment:
       COLLECTOR_ZIPKIN_HOST_PORT: :9411
-    
     ports:
-      - 6831:6831/udp
-      - 6832:6832/udp
-      - 5778:5778 
       - 16686:16686 
-      - 14250:14250
-      - 14268:14268
-      - 14269:14269
-      - 9411:9411
-
-
-
-
-  #tempo:
-  #  image: grafana/tempo:latest
-  #  command: [ "-config.file=/etc/tempo.yaml" ]
-  #  volumes:
-  #    - ../otlp/tempo.yaml:/etc/tempo.yaml
-  #    - ./tempo-data:/tmp/tempo
-  #  ports:
-  #    - "3200"   # tempo
-  #    - "4318"  # otlp http
-  grafana:
-    image: grafana/grafana:latest
-    environment:
-      - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-      - GF_AUTH_DISABLE_LOGIN_FORM=true
-      - GF_FEATURE_TOGGLES_ENABLE=traceqlEditor
-    ports:
-      - "3000:3000"
-    
   postgres:
     image: postgres:alpine
     environment:
