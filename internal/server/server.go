@@ -35,10 +35,12 @@ func NewServer() *http.Server {
 
 	db := dbService.GetDatabase()
 
-	userRepository := infrastructure.NewUserRepository(db)
-	jwtRepository := infrastructure.NewJtiRecordRepository(db)
+	userQueryRepository := infrastructure.NewUserQueryRepository(db)
+	userCommandRepository := infrastructure.NewUserCommandRepository(db)
+	jtiRecordQueryRepository := infrastructure.NewJtiRecordQueryRepository(db)
+	jtiRecordCommandRepository := infrastructure.NewJtiRecordCommandRepository(db)
 
-	tokenService := application.NewTokenService(userRepository, jwtRepository)
+	tokenService := application.NewTokenService(userQueryRepository, userCommandRepository, jtiRecordQueryRepository, jtiRecordCommandRepository)
 
 	NewServer := &Server{
 		port: port,

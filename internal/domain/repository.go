@@ -2,23 +2,23 @@ package domain
 
 import "context"
 
-type IUserRepository interface {
-	// Query
+type IUserQueryRepository interface {
 	FindByEmail(context.Context, string) (*User, error)
 	FindByID(context.Context, uint) (*User, error)
+}
 
-	// Command
+type IUserCommandRepository interface {
 	Store(context.Context, *User) error
 	Update(context.Context, *User) error
 	Delete(context.Context, string) error
 }
 
-type IJtiRecordRepository interface {
-	// Query
+type IJtiRecordQueryRepository interface {
 	FindByID(context.Context, string) (*JtiRecord, error)
 	FindByUserID(context.Context, uint) (*JtiRecord, error)
+}
 
-	// Command
+type IJtiRecordCommandRepository interface {
 	Store(context.Context, *JtiRecord) error
 	Delete(context.Context, string) error
 }

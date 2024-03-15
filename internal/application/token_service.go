@@ -9,25 +9,35 @@ import (
 )
 
 type TokenService struct {
-	userRepository domain.IUserRepository
-	jtiRepository  domain.IJtiRecordRepository
+	userQueryRepository   domain.IUserQueryRepository
+	userCommandRepository domain.IUserCommandRepository
+
+	JtiRecordQueryRepository   domain.IJtiRecordQueryRepository
+	JtiRecordCommandRepository domain.IJtiRecordCommandRepository
 }
 
-func NewTokenService(userRepository domain.IUserRepository, jtiRepository domain.IJtiRecordRepository) *TokenService {
+func NewTokenService(
+	userQueryRepository domain.IUserQueryRepository,
+	userCommandRepository domain.IUserCommandRepository,
+	jtiRecordQueryRepository domain.IJtiRecordQueryRepository,
+	jtiRecordCommandRepository domain.IJtiRecordCommandRepository,
+) *TokenService {
 	return &TokenService{
-		userRepository: userRepository,
-		jtiRepository:  jtiRepository,
+		userQueryRepository:        userQueryRepository,
+		userCommandRepository:      userCommandRepository,
+		JtiRecordQueryRepository:   jtiRecordQueryRepository,
+		JtiRecordCommandRepository: jtiRecordCommandRepository,
 	}
 }
 
 func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (*domain.Jwt, error) {
 	user := domain.NewUser(r.Email, r.Password, r.Authority)
 
-	if _, err := s.userRepository.FindByEmail(ctx, r.Email); err == nil {
+	if _, err := s.userQueryRepository.FindByEmail(ctx, r.Email); err == nil {
 		return nil, fmt.Errorf("user already exists with email %s", r.Email)
 	}
 
-	if err := s.userRepository.Store(ctx, user); err != nil {
+	if err := s.userCommandRepository.Store(ctx, user); err != nil {
 		return nil, err
 	}
 	// nolint: staticcheck
@@ -46,7 +56,7 @@ func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (*d
 }
 
 func (s *TokenService) Login(ctx context.Context, r *UserLoginRequest) (*domain.Jwt, error) {
-	user, err := s.userRepository.FindByEmail(ctx, r.Email)
+	user, err := s.userQueryRepository.FindByEmail(ctx, r.Email)
 	if err != nil {
 		slog.Error("Error finding user by email", slog.String("email", r.Email))
 		return nil, err
@@ -59,12 +69,13 @@ func (s *TokenService) Login(ctx context.Context, r *UserLoginRequest) (*domain.
 		return nil, fmt.Errorf("invalid password")
 	}
 
-	jti, err := s.jtiRepository.FindByUserID(ctx, user.ID)
-	slog.Error("Error finding jti record by user id", slog.Any("userId", user.ID), slog.Any("error", err))
+	jti, err := s.JtiRecordQueryRepository.FindByUserID(ctx, user.ID)
 	if err == nil { // If there is no error, there is a jti record for this user
-		if err := s.jtiRepository.Delete(ctx, jti.Id); err != nil {
-			return nil, err
-		}
+		go func() {
+			if err := s.JtiRecordCommandRepository.Delete(ctx, jti.Id); err != nil {
+				slog.Error("Error deleting jti record", slog.Any("jtiRecord", jti))
+			}
+		}()
 	}
 
 	jwt, err := s.generateJwt(ctx)
@@ -100,7 +111,7 @@ func (s *TokenService) saveJtiRecord(ctx context.Context, jwt *domain.Jwt) error
 	}
 
 	jtiRecord := domain.NewJtiRecord(jwt, u.ID)
-	err := s.jtiRepository.Store(ctx, jtiRecord)
+	err := s.JtiRecordCommandRepository.Store(ctx, jtiRecord)
 	if err != nil {
 		slog.Error("Error storing jti record", slog.Any("jtiRecord", jtiRecord))
 		return err

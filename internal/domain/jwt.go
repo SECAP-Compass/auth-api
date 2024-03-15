@@ -17,7 +17,7 @@ type JtiRecord struct {
 	gorm.Model `gorm:"primary_key:Id"`
 
 	Id              string    `json:"id" gorm:"primary_key"`
-	Email           string    `json:"email"`
+	Email           string    `json:"email" gorm:"index"`
 	UserId          uint      `json:"userId"`
 	ExpireTimeStamp time.Time `json:"expireTimeStamp"`
 }
