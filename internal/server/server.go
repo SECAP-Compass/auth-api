@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	validation "github.com/go-playground/validator/v10"
+	"github.com/go-playground/validator/v10"
 	_ "github.com/joho/godotenv/autoload"
 
 	"auth-api/internal/application"
@@ -21,7 +21,7 @@ type Server struct {
 	db           database.Service
 	tokenService *application.TokenService
 
-	Validator *validation.Validate
+	Validator *validator.Validate
 }
 
 func NewServer() *http.Server {
@@ -47,6 +47,7 @@ func NewServer() *http.Server {
 
 		db:           database.New(),
 		tokenService: tokenService,
+		Validator:    validator.New(validator.WithRequiredStructEnabled()),
 	}
 
 	server := &http.Server{

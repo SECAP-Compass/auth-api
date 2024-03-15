@@ -2,8 +2,11 @@ package server
 
 import (
 	"auth-api/internal/application"
+	"fmt"
 	"log/slog"
 	"net/http"
+
+	validation "github.com/go-playground/validator/v10"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -13,8 +16,10 @@ import (
 func (s *Server) RegisterRoutes() http.Handler {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
 
 	r.Get("/health", s.healthHandler)
+	r.Mount("/debug", middleware.Profiler())
 
 	r.Post("/register", s.Register)
 	r.Post("/login", s.Login)
@@ -39,11 +44,11 @@ func (s *Server) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	/*if err = s.Validator.Struct(req); err != nil {
+	if err = s.Validator.Struct(req); err != nil {
 		errors := err.(validation.ValidationErrors)
 		http.Error(w, fmt.Sprintf("validation errors: %s", errors), http.StatusBadRequest)
 		return
-	}*/
+	}
 
 	jwt, err := s.tokenService.Register(ctx, req)
 	if err != nil {
@@ -78,13 +83,11 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	/*
-		if err = s.Validator.Struct(req); err != nil {
-			errors := err.(validation.ValidationErrors)
-			http.Error(w, fmt.Sprintf("validation errors: %s", errors), http.StatusBadRequest)
-			return
-		}
-	*/
+	if err = s.Validator.Struct(req); err != nil {
+		errors := err.(validation.ValidationErrors)
+		http.Error(w, fmt.Sprintf("validation errors: %s", errors), http.StatusBadRequest)
+		return
+	}
 
 	jwt, err := s.tokenService.Login(ctx, req)
 	if err != nil {
