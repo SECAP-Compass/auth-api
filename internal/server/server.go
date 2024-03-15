@@ -29,6 +29,8 @@ type Server struct {
 func NewServer() *http.Server {
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
 
+	initTracer()
+
 	// TODO: Do I need this database service?
 	dbService := database.New()
 	if err := dbService.Health(); err != nil {

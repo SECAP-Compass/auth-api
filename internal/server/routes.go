@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	validation "github.com/go-playground/validator/v10"
+	"go.opentelemetry.io/otel"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -74,6 +75,8 @@ func (s *Server) Register(w http.ResponseWriter, r *http.Request) {
 // TODO: a conventional respone structure
 func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
+	ctx, span := otel.Tracer("auth-api").Start(ctx, "Login")
+	defer span.End()
 
 	req := &application.UserLoginRequest{}
 	err := json.NewDecoder(r.Body).Decode(&req)

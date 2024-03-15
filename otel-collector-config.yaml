@@ -1,0 +1,11 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+
+exporters:
+  jaeger:
+    endpoint: http://jaeger:14268/api/traces
+  jaeger2:
+    endpoint: http://jaeger:4318/api/traces
