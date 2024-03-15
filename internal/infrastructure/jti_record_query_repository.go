@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"auth-api/internal/domain"
+	"auth-api/internal/util"
 	"context"
 	"fmt"
 
@@ -24,6 +25,9 @@ func NewJtiRecordQueryRepository(db *gorm.DB) domain.IJtiRecordQueryRepository {
 }
 
 func (r *JtiRecordQueryRepository) FindByID(ctx context.Context, jti string) (*domain.JtiRecord, error) {
+	_, span := util.StartSpan(ctx)
+	defer span.End()
+
 	jtiRecord := &domain.JtiRecord{}
 
 	if err := r.db.First(jtiRecord, jti).Error; err != nil {
@@ -39,6 +43,9 @@ func (r *JtiRecordQueryRepository) FindByID(ctx context.Context, jti string) (*d
 }
 
 func (r *JtiRecordQueryRepository) FindByUserID(ctx context.Context, userId uint) (*domain.JtiRecord, error) {
+	_, span := util.StartSpan(ctx)
+	defer span.End()
+
 	jtiRecord := &domain.JtiRecord{}
 
 	if err := r.db.First(jtiRecord, "user_id = ?", userId).Error; err != nil {

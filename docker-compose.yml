@@ -1,17 +1,38 @@
 version: '3.8'
 
-services:
-  #mongo:
-  #  image: mongo:latest
-  #  environment:
-  #    MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
-  #    MONGO_INITDB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-  #    MONGO_AUTH: true
-  #  ports:
-  #    - "${DB_PORT}:27017"
-  #  volumes:
-  #    - mongo_volume:/data/db
 
+services:
+  auth-api:
+    build:
+      context: .
+      target: final
+      
+    ports:
+      - 8080:8080
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=admin
+      - DB_PASSWORD=admin
+      - DB_DATABASE=postgres
+      - PORT=8080
+      - APP_ENV=local
+      - OTLP_ENDPOINT=jaeger:4318
+  
+  ## How to use otel-collector?
+  otel-collector:
+    image: otel/opentelemetry-collector-dev:latest
+    ports:
+      - 4318:4318
+      - 4317:4317
+      - 55680:55680
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    environment:
+      COLLECTOR_ZIPKIN_HOST_PORT: :9411
+    ports:
+      - 16686:16686 
   postgres:
     image: postgres:alpine
     environment:

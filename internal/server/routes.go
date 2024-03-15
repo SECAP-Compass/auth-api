@@ -2,6 +2,7 @@ package server
 
 import (
 	"auth-api/internal/application"
+	"auth-api/internal/util"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -17,6 +18,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 	r := chi.NewRouter()
 	// r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
+	r.Use(TracerFn)
 
 	r.Get("/health", s.healthHandler)
 	r.Mount("/debug", middleware.Profiler())
@@ -36,6 +38,10 @@ func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
 // TODO: a conventional respone structure
 func (s *Server) Register(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
+
+	_, span := util.StartSpan(ctx)
+	defer span.End()
+
 	req := &application.UserRegisterRequest{}
 	err := json.NewDecoder(r.Body).Decode(req)
 	defer r.Body.Close()
@@ -74,6 +80,9 @@ func (s *Server) Register(w http.ResponseWriter, r *http.Request) {
 // TODO: a conventional respone structure
 func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
+
+	_, span := util.StartSpan(ctx)
+	defer span.End()
 
 	req := &application.UserLoginRequest{}
 	err := json.NewDecoder(r.Body).Decode(&req)

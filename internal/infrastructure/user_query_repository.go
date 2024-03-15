@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"auth-api/internal/domain"
+	"auth-api/internal/util"
 	"context"
 	"fmt"
 
@@ -22,6 +23,9 @@ func NewUserQueryRepository(db *gorm.DB) domain.IUserQueryRepository {
 }
 
 func (r *UserQueryRepository) FindByEmail(ctx context.Context, email string) (*domain.User, error) {
+	_, span := util.StartSpan(ctx)
+	defer span.End()
+
 	user := &domain.User{}
 
 	if err := r.db.First(user, "email = ?", email).Error; err != nil {
@@ -37,6 +41,9 @@ func (r *UserQueryRepository) FindByEmail(ctx context.Context, email string) (*d
 }
 
 func (r *UserQueryRepository) FindByID(ctx context.Context, id uint) (*domain.User, error) {
+	_, span := util.StartSpan(ctx)
+	defer span.End()
+
 	user := &domain.User{}
 
 	if err := r.db.First(user, id).Error; err != nil {
