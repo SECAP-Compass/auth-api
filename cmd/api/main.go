@@ -8,10 +8,10 @@ import (
 
 func main() {
 	server := server.NewServer()
+	server.RegisterRoutes()
 
-	slog.Info("Server is running on:", slog.String("port", server.Addr))
-	err := server.ListenAndServe()
-	if err != nil {
-		panic(fmt.Sprintf("cannot start server: %s", err))
-	}
+	slog.Info("Server is running on:", slog.Int("port", server.Port))
+
+	server.App.Listen(fmt.Sprintf(":%d", server.Port))
+
 }

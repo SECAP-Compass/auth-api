@@ -32,7 +32,7 @@ func NewTokenService(
 }
 
 func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (*domain.Jwt, error) {
-	_, span := util.StartSpan(ctx)
+	ctx, span := util.StartSpan(ctx)
 	defer span.End()
 
 	user := domain.NewUser(r.Email, r.Password, r.Authority)
@@ -60,7 +60,7 @@ func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (*d
 }
 
 func (s *TokenService) Login(ctx context.Context, r *UserLoginRequest) (*domain.Jwt, error) {
-	_, span := util.StartSpan(ctx)
+	ctx, span := util.StartSpan(ctx)
 	defer span.End()
 
 	user, err := s.userQueryRepository.FindByEmail(ctx, r.Email)
@@ -93,7 +93,6 @@ func (s *TokenService) Login(ctx context.Context, r *UserLoginRequest) (*domain.
 	if err = s.saveJtiRecord(ctx, jwt); err != nil {
 		return nil, err
 	}
-
 	return jwt, nil
 }
 

@@ -1,14 +1,12 @@
 package server
 
 import (
-	"fmt"
 	"log/slog"
-	"net/http"
 	"os"
 	"strconv"
-	"time"
 
 	"github.com/go-playground/validator/v10"
+	"github.com/gofiber/fiber/v2"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/lmittmann/tint"
 
@@ -18,7 +16,8 @@ import (
 )
 
 type Server struct {
-	port int
+	Port int
+	App  *fiber.App
 
 	db           database.Service
 	tokenService *application.TokenService
@@ -26,9 +25,10 @@ type Server struct {
 	Validator *validator.Validate
 }
 
-func NewServer() *http.Server {
+func NewServer() *Server {
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
 
+	app := fiber.New()
 	initTracer()
 
 	// TODO: Do I need this database service?
@@ -53,20 +53,11 @@ func NewServer() *http.Server {
 	logger := slog.New(loggerHandler)
 	slog.SetDefault(logger)
 
-	NewServer := &Server{
-		port:         port,
+	return &Server{
+		App:          app,
+		Port:         port,
 		db:           database.New(),
 		tokenService: tokenService,
 		Validator:    validator.New(validator.WithRequiredStructEnabled()),
 	}
-
-	server := &http.Server{
-		Addr:         fmt.Sprintf(":%d", NewServer.port),
-		Handler:      NewServer.RegisterRoutes(),
-		IdleTimeout:  time.Minute,
-		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 30 * time.Second,
-	}
-
-	return server
 }

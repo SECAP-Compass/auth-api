@@ -2,29 +2,28 @@ version: '3.8'
 
 
 services:
-  auth-api:
-    build:
-      context: .
-      target: final
+  # auth-api:
+  #   build:
+  #     context: .
+  #     target: final
       
-    ports:
-      - 8080:8080
-    environment:
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_USERNAME=admin
-      - DB_PASSWORD=admin
-      - DB_DATABASE=postgres
-      - PORT=8080
-      - APP_ENV=local
-      - OTLP_ENDPOINT=jaeger:4318
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     - DB_HOST=postgres
+  #     - DB_PORT=5432
+  #     - DB_USERNAME=admin
+  #     - DB_PASSWORD=admin
+  #     - DB_DATABASE=postgres
+  #     - PORT=8081
+  #     - APP_ENV=local
+  #     - OTLP_ENDPOINT=jaeger:4318
   
   ## How to use otel-collector?
   otel-collector:
     image: otel/opentelemetry-collector-dev:latest
     ports:
-      - 4318:4318
-      - 4317:4317
+
       - 55680:55680
   jaeger:
     image: jaegertracing/all-in-one:latest
@@ -33,6 +32,17 @@ services:
       COLLECTOR_ZIPKIN_HOST_PORT: :9411
     ports:
       - 16686:16686 
+      - 4318:4318
+      - 4317:4317
+      - 9411:9411
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
   postgres:
     image: postgres:alpine
     environment:
@@ -44,5 +54,4 @@ services:
       - postgres_volume:/var/lib/postgresql/data
 
 volumes:
-  #mongo_volume:
   postgres_volume:
