@@ -9,10 +9,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type Claims struct {
-	jwt.StandardClaims
-}
-
 type JtiRecord struct {
 	gorm.Model `gorm:"primary_key:Id"`
 
@@ -22,16 +18,22 @@ type JtiRecord struct {
 	ExpireTimeStamp time.Time `json:"expireTimeStamp"`
 }
 
-// Do I need that?
 type Jwt struct {
 	Jwt *jwt.Token
+}
+
+type CustomClaims struct {
+	*jwt.StandardClaims
+	CityId    uint     `json:"cityId"`
+	City      string   `json:"city"`
+	Roles     []string `json:"roles"`
+	Authority string   `json:"authority"`
 }
 
 const ISSUER = "secap-auth"
 
 func NewJwt(email string) (*jwt.Token, error) {
-	return jwt.NewWithClaims(
-		jwt.SigningMethodHS256,
+	claims := &CustomClaims{
 		&jwt.StandardClaims{
 			Id:        uuid.NewString(),
 			Issuer:    ISSUER,
@@ -40,6 +42,14 @@ func NewJwt(email string) (*jwt.Token, error) {
 			Audience:  "secap", // ?I think this should be Authority?
 			Subject:   email,
 		},
+		34, "istanbul",
+		[]string{"buildingAdmin"},
+		"istanbul",
+	}
+
+	return jwt.NewWithClaims(
+		jwt.SigningMethodHS256,
+		claims,
 	), nil
 }
 
@@ -49,8 +59,7 @@ func (j *Jwt) String() string {
 }
 
 func (j *Jwt) ToResponse() map[string]string {
-	c := j.Jwt.Claims.(*jwt.StandardClaims)
-
+	c := j.Jwt.Claims.(*CustomClaims)
 	return map[string]string{
 		"access_token": j.String(),
 		"issuedAt":     strconv.FormatInt(c.IssuedAt, 10),
@@ -60,7 +69,7 @@ func (j *Jwt) ToResponse() map[string]string {
 }
 
 func NewJtiRecord(j *Jwt, userId uint) *JtiRecord {
-	c := j.Jwt.Claims.(*jwt.StandardClaims)
+	c := j.Jwt.Claims.(*CustomClaims)
 
 	return &JtiRecord{
 		Id:              c.Id,

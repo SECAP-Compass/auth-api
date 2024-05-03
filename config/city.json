@@ -1,0 +1,974 @@
+{
+  "1": {
+    "name": "Adana",
+    "population": 2263373,
+    "coordinates": {
+      "latitude": 37.001667,
+      "longitude": 35.328889
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/4yHUNdZuhcBn7rqX8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/167216"
+    }
+  },
+  "2": {
+    "name": "Adıyaman",
+    "population": 632148,
+    "coordinates": {
+      "latitude": 37.764722,
+      "longitude": 38.278611
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/UqRzeK1ApyPjbhpp6",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223141"
+    }
+  },
+  "3": {
+    "name": "Afyonkarahisar",
+    "population": 744179,
+    "coordinates": {
+      "latitude": 38.750278,
+      "longitude": 30.556667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/YeNjtvM93DdWqXZ46",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223171"
+    }
+  },
+  "4": {
+    "name": "Ağrı",
+    "population": 524644,
+    "coordinates": {
+      "latitude": 39.719444,
+      "longitude": 43.050556
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/XRhjXkNfniLTjCfY7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/186433"
+    }
+  },
+  "5": {
+    "name": "Amasya",
+    "population": 335331,
+    "coordinates": {
+      "latitude": 40.649722,
+      "longitude": 35.835278
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/1wM3GEACXZW3kG219",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223452"
+    }
+  },
+  "6": {
+    "name": "Ankara",
+    "population": 5747325,
+    "coordinates": {
+      "latitude": 39.92077,
+      "longitude": 32.85411
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/Ri3Zh3yBka5RhXdG8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223422"
+    }
+  },
+  "7": {
+    "name": "Antalya",
+    "population": 2619832,
+    "coordinates": {
+      "latitude": 36.88414,
+      "longitude": 30.70563
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/bs2JWRpPJPLLfTyv5",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223132"
+    }
+  },
+  "8": {
+    "name": "Artvin",
+    "population": 169543,
+    "coordinates": {
+      "latitude": 41.18222,
+      "longitude": 41.81889
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/BNqMFsBRd8AUX9mx8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223448"
+    }
+  },
+  "9": {
+    "name": "Aydın",
+    "population": 1134031,
+    "coordinates": {
+      "latitude": 37.84444,
+      "longitude": 27.84556
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/453kMPbSgGMJPWcg7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223166"
+    }
+  },
+  "10": {
+    "name": "Balıkesir",
+    "population": 1250610,
+    "coordinates": {
+      "latitude": 39.64861,
+      "longitude": 27.8825
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/RJquCx4SbtBENXDu9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223464"
+    }
+  },
+  "11": {
+    "name": "Bilecik",
+    "population": 228334,
+    "coordinates": {
+      "latitude": 40.14556,
+      "longitude": 29.97917
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/LJDq5jVJdrcLhCHu5",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223420"
+    }
+  },
+  "12": {
+    "name": "Bingöl",
+    "population": 283112,
+    "coordinates": {
+      "latitude": 38.885,
+      "longitude": 40.49861
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/4YXDvYHT4iHFCMDb7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223444"
+    }
+  },
+  "13": {
+    "name": "Bitlis",
+    "population": 352277,
+    "coordinates": {
+      "latitude": 38.39528,
+      "longitude": 42.12361
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/p3fCL2MKcfHeqXcD6",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223441"
+    }
+  },
+  "14": {
+    "name": "Bolu",
+    "population": 320014,
+    "coordinates": {
+      "latitude": 40.73528,
+      "longitude": 31.60639
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/T8DJCNo4S8ngxcY36",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223461"
+    }
+  },
+  "15": {
+    "name": "Burdur",
+    "population": 273716,
+    "coordinates": {
+      "latitude": 37.72111,
+      "longitude": 30.29056
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/BA4vZ8FHqw9TdWFt8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/2319368"
+    }
+  },
+  "16": {
+    "name": "Bursa",
+    "population": 3147818,
+    "coordinates": {
+      "latitude": 40.18222,
+      "longitude": 29.06111
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/D4vgiGXypSUoAnb5A",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223463"
+    }
+  },
+  "17": {
+    "name": "Çanakkale",
+    "population": 557276,
+    "coordinates": {
+      "latitude": 40.15556,
+      "longitude": 26.41444
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/TUMVgeTAWBChTA5D9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223471"
+    }
+  },
+  "18": {
+    "name": "Çankırı",
+    "population": 196515,
+    "coordinates": {
+      "latitude": 40.6,
+      "longitude": 33.61667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/6kF6GM2DkPqqCoMD8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223454"
+    }
+  },
+  "19": {
+    "name": "Çorum",
+    "population": 526282,
+    "coordinates": {
+      "latitude": 40.55056,
+      "longitude": 34.95556
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/wQa5dtRQDPCU4UNv9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223453"
+    }
+  },
+  "20": {
+    "name": "Denizli",
+    "population": 1051056,
+    "coordinates": {
+      "latitude": 37.77639,
+      "longitude": 29.08611
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/aVMraLcFzdK6MbeT9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223169"
+    }
+  },
+  "21": {
+    "name": "Diyarbakır",
+    "population": 1791373,
+    "coordinates": {
+      "latitude": 37.91417,
+      "longitude": 40.23056
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/qsS4gxc5GdbQeMo57",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223435"
+    }
+  },
+  "22": {
+    "name": "Edirne",
+    "population": 412115,
+    "coordinates": {
+      "latitude": 41.67083,
+      "longitude": 26.55556
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/xBHKDxVHbWD2RrHs6",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223465"
+    }
+  },
+  "23": {
+    "name": "Elazığ",
+    "population": 588088,
+    "coordinates": {
+      "latitude": 38.68056,
+      "longitude": 39.22639
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/aALifwxa3ZNacgtn6",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223443"
+    }
+  },
+  "24": {
+    "name": "Erzincan",
+    "population": 237351,
+    "coordinates": {
+      "latitude": 39.75,
+      "longitude": 39.5
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/9ypr7KJcnAEakUqY6",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223445"
+    }
+  },
+  "25": {
+    "name": "Erzurum",
+    "population": 756893,
+    "coordinates": {
+      "latitude": 39.90861,
+      "longitude": 41.27694
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/ssmkHABXNprF5JFC9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/186432"
+    }
+  },
+  "26": {
+    "name": "Eskişehir",
+    "population": 898363,
+    "coordinates": {
+      "latitude": 39.77639,
+      "longitude": 30.52056
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/rRM16qjwATHfezhF8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223421"
+    }
+  },
+  "27": {
+    "name": "Gaziantep",
+    "population": 2130432,
+    "coordinates": {
+      "latitude": 37.06667,
+      "longitude": 37.38333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/ySMoHHviNjRyBriG7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223139"
+    }
+  },
+  "28": {
+    "name": "Giresun",
+    "population": 450154,
+    "coordinates": {
+      "latitude": 40.91667,
+      "longitude": 38.4
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/xsmiZVAeBZrndZYE8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223449"
+    }
+  },
+  "29": {
+    "name": "Gümüşhane",
+    "population": 150119,
+    "coordinates": {
+      "latitude": 40.45,
+      "longitude": 39.48333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/5nGQ1c66NJLJT2QL9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223541"
+    }
+  },
+  "30": {
+    "name": "Hakkari",
+    "population": 278218,
+    "coordinates": {
+      "latitude": 37.58333,
+      "longitude": 43.73333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/Pa4EUb6rz91uW66q9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/174742"
+    }
+  },
+  "31": {
+    "name": "Hatay",
+    "population": 1670712,
+    "coordinates": {
+      "latitude": 36.2,
+      "longitude": 36.16667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/2VkFg1AM9B4Xv9W89",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223122"
+    }
+  },
+  "32": {
+    "name": "Isparta",
+    "population": 445678,
+    "coordinates": {
+      "latitude": 37.76667,
+      "longitude": 30.55
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/v8tcHjuuCKyNMn687",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223134"
+    }
+  },
+  "33": {
+    "name": "Mersin",
+    "population": 1891145,
+    "coordinates": {
+      "latitude": 36.8,
+      "longitude": 34.63333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/jVPgxP2wEF1BcUV66",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223131"
+    }
+  },
+  "34": {
+    "name": "İstanbul",
+    "population": 15840900,
+    "coordinates": {
+      "latitude": 41.01384,
+      "longitude": 28.94966
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/wKdwRFM4NW8Wm6ZZ8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223474"
+    }
+  },
+  "35": {
+    "name": "İzmir",
+    "population": 4425789,
+    "coordinates": {
+      "latitude": 38.41885,
+      "longitude": 27.12872
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/nukYGi69xLMX7SNR6",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223167"
+    }
+  },
+  "36": {
+    "name": "Kars",
+    "population": 281077,
+    "coordinates": {
+      "latitude": 40.60833,
+      "longitude": 43.08333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/worCQtM2sdTAy6t8A",
+      "openStreetMap": "https://www.openstreetmap.org/relation/186431"
+    }
+  },
+  "37": {
+    "name": "Kastamonu",
+    "population": 375592,
+    "coordinates": {
+      "latitude": 41.38889,
+      "longitude": 33.78222
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/SSFqej5quZyQ6uZn7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/186431"
+    }
+  },
+  "38": {
+    "name": "Kayseri",
+    "population": 1434357,
+    "coordinates": {
+      "latitude": 38.73111,
+      "longitude": 35.47889
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/A27qXKh2FCWEzTzr8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/154451"
+    }
+  },
+  "39": {
+    "name": "Kırklareli",
+    "population": 366363,
+    "coordinates": {
+      "latitude": 41.73333,
+      "longitude": 27.21667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/v6PRExTopMCA2uhb6",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223469"
+    }
+  },
+  "40": {
+    "name": "Kırşehir",
+    "population": 242944,
+    "coordinates": {
+      "latitude": 39.14222,
+      "longitude": 34.17056
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/C7rn2oVtZDqz54HA7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/154452#map=9/39.3111/34.0556"
+    }
+  },
+  "41": {
+    "name": "Kocaeli",
+    "population": 2033441,
+    "coordinates": {
+      "latitude": 40.76667,
+      "longitude": 29.91667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/PSVVkZbPKuEUrim67",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223473"
+    }
+  },
+  "42": {
+    "name": "Konya",
+    "population": 2277017,
+    "coordinates": {
+      "latitude": 37.86667,
+      "longitude": 32.48333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/EMCU5es81LqioNid7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223133"
+    }
+  },
+  "43": {
+    "name": "Kütahya",
+    "population": 578640,
+    "coordinates": {
+      "latitude": 39.41667,
+      "longitude": 29.98333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/DsRnEr82a7fsJ1Xf8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223172"
+    }
+  },
+  "44": {
+    "name": "Malatya",
+    "population": 808692,
+    "coordinates": {
+      "latitude": 38.355,
+      "longitude": 38.305
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/HkMktwFVCqoCt14g7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223426"
+    }
+  },
+  "45": {
+    "name": "Manisa",
+    "population": 1456626,
+    "coordinates": {
+      "latitude": 38.61361,
+      "longitude": 27.42694
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/E9DzgTLFvBV3rstE7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223168"
+    }
+  },
+  "46": {
+    "name": "Kahramanmaraş",
+    "population": 1171298,
+    "coordinates": {
+      "latitude": 37.58333,
+      "longitude": 36.93333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/s3dakhk52nvps97L9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223138"
+    }
+  },
+  "47": {
+    "name": "Mardin",
+    "population": 862757,
+    "coordinates": {
+      "latitude": 37.31111,
+      "longitude": 40.74361
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/WidjMsfgeZwTdGqC9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223436"
+    }
+  },
+  "48": {
+    "name": "Muğla",
+    "population": 1021141,
+    "coordinates": {
+      "latitude": 37.21667,
+      "longitude": 28.36667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/4YiaJwzP6U5Z2irW7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223136"
+    }
+  },
+  "49": {
+    "name": "Muş",
+    "population": 405228,
+    "coordinates": {
+      "latitude": 38.74444,
+      "longitude": 41.49611
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/7oitkLxS2gPPAHEF7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223440"
+    }
+  },
+  "50": {
+    "name": "Nevşehir",
+    "population": 308003,
+    "coordinates": {
+      "latitude": 38.62444,
+      "longitude": 34.72306
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/MUa2UDqfpWXXfiod9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/154449"
+    }
+  },
+  "51": {
+    "name": "Niğde",
+    "population": 363725,
+    "coordinates": {
+      "latitude": 37.96667,
+      "longitude": 34.68333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/PpKh8rj8wEsN1raW9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/154456"
+    }
+  },
+  "52": {
+    "name": "Ordu",
+    "population": 760872,
+    "coordinates": {
+      "latitude": 40.98333,
+      "longitude": 37.88333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/MUUAwLbot3PKiM4z9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223450"
+    }
+  },
+  "53": {
+    "name": "Rize",
+    "population": 345662,
+    "coordinates": {
+      "latitude": 41.02083,
+      "longitude": 40.52361
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/zyNExe1TH4ca4TEp7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223542"
+    }
+  },
+  "54": {
+    "name": "Sakarya",
+    "population": 1060876,
+    "coordinates": {
+      "latitude": 40.76667,
+      "longitude": 30.41667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/E14vjUfh6vtYgxNE6",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223462"
+    }
+  },
+  "55": {
+    "name": "Samsun",
+    "population": 1371274,
+    "coordinates": {
+      "latitude": 41.28639,
+      "longitude": 36.33139
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/dfCJKSAcZh8fcHht5",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223451"
+    }
+  },
+  "56": {
+    "name": "Siirt",
+    "population": 331980,
+    "coordinates": {
+      "latitude": 37.94444,
+      "longitude": 41.93333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/A9RziYU4nmT5JRXTA",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223543"
+    }
+  },
+  "57": {
+    "name": "Sinop",
+    "population": 218408,
+    "coordinates": {
+      "latitude": 42.02361,
+      "longitude": 35.15306
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/dDFGTRBWxMVtV4sT6",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223457"
+    }
+  },
+  "58": {
+    "name": "Sivas",
+    "population": 636121,
+    "coordinates": {
+      "latitude": 39.74722,
+      "longitude": 37.0175
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/1EnUytV861FmLWjZ8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223425"
+    }
+  },
+  "59": {
+    "name": "Tekirdağ",
+    "population": 1113400,
+    "coordinates": {
+      "latitude": 40.98333,
+      "longitude": 27.51667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/njUunD1SpA8zXX2r9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223470"
+    }
+  },
+  "60": {
+    "name": "Tokat",
+    "population": 602567,
+    "coordinates": {
+      "latitude": 40.31667,
+      "longitude": 36.55
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/NZdDAFbedQgwFHgV8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223424"
+    }
+  },
+  "61": {
+    "name": "Trabzon",
+    "population": 816684,
+    "coordinates": {
+      "latitude": 41,
+      "longitude": 39.73333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/3MNVGU2vaK4K4pUT6",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223447"
+    }
+  },
+  "62": {
+    "name": "Tunceli",
+    "population": 83645,
+    "coordinates": {
+      "latitude": 39.11667,
+      "longitude": 39.53333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/4xdfVHREhnbcexoQA",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223537"
+    }
+  },
+  "63": {
+    "name": "Şanlıurfa",
+    "population": 2143020,
+    "coordinates": {
+      "latitude": 37.15,
+      "longitude": 38.8
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/HomBJUkX9PrtNk2L6",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223434"
+    }
+  },
+  "64": {
+    "name": "Uşak",
+    "population": 373183,
+    "coordinates": {
+      "latitude": 38.68333,
+      "longitude": 29.41667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/fAhNfzHxWuguCfib7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223170"
+    }
+  },
+  "65": {
+    "name": "Van",
+    "population": 1141015,
+    "coordinates": {
+      "latitude": 38.5,
+      "longitude": 43.4
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/HSTpUR2egRhG39M29",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223442"
+    }
+  },
+  "66": {
+    "name": "Yozgat",
+    "population": 418500,
+    "coordinates": {
+      "latitude": 39.81667,
+      "longitude": 34.81667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/FJbXiqUud8M9tpGp9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/154450"
+    }
+  },
+  "67": {
+    "name": "Zonguldak",
+    "population": 589684,
+    "coordinates": {
+      "latitude": 41.45,
+      "longitude": 31.8
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/uLQrR9gNqGMRJ4t7A",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223459"
+    }
+  },
+  "68": {
+    "name": "Aksaray",
+    "population": 429069,
+    "coordinates": {
+      "latitude": 38.36667,
+      "longitude": 34.03333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/xsGaB46hYrkMkwd8A",
+      "openStreetMap": "https://www.openstreetmap.org/relation/154454"
+    }
+  },
+  "69": {
+    "name": "Bayburt",
+    "population": 85042,
+    "coordinates": {
+      "latitude": 40.25,
+      "longitude": 40.21667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/mGqWgVfqQneCzwj36",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223446"
+    }
+  },
+  "70": {
+    "name": "Karaman",
+    "population": 258838,
+    "coordinates": {
+      "latitude": 37.18333,
+      "longitude": 33.21667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/FWnvmkmDTmfnt3FN7",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223446"
+    }
+  },
+  "71": {
+    "name": "Kırıkkale",
+    "population": 275968,
+    "coordinates": {
+      "latitude": 39.85,
+      "longitude": 33.51667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/wrhgZ7eMU9LwfiL46",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223423"
+    }
+  },
+  "72": {
+    "name": "Batman",
+    "population": 626319,
+    "coordinates": {
+      "latitude": 37.88333,
+      "longitude": 41.13333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/DiyqUr2MEoPWmWjV8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223437"
+    }
+  },
+  "73": {
+    "name": "Şırnak",
+    "population": 546589,
+    "coordinates": {
+      "latitude": 37.51667,
+      "longitude": 42.46667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/tDwsK4Y4kJZDpp55A",
+      "openStreetMap": "https://www.openstreetmap.org/relation/1751843"
+    }
+  },
+  "74": {
+    "name": "Bartın",
+    "population": 201711,
+    "coordinates": {
+      "latitude": 41.63333,
+      "longitude": 32.33333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/kEA1uaXRs5h4Ys497",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223458"
+    }
+  },
+  "75": {
+    "name": "Ardahan",
+    "population": 94932,
+    "coordinates": {
+      "latitude": 41.10833,
+      "longitude": 42.7
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/czPjzpGKZMS5hUgm9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/1251450"
+    }
+  },
+  "76": {
+    "name": "Iğdır",
+    "population": 203159,
+    "coordinates": {
+      "latitude": 39.91667,
+      "longitude": 44.03333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/4sTLXpYBHttBGPsdA",
+      "openStreetMap": "https://www.openstreetmap.org/relation/186434"
+    }
+  },
+  "77": {
+    "name": "Yalova",
+    "population": 291001,
+    "coordinates": {
+      "latitude": 40.65,
+      "longitude": 29.26667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/RtzU9F1fuhPVMFsm9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223472"
+    }
+  },
+  "78": {
+    "name": "Karabük",
+    "population": 249287,
+    "coordinates": {
+      "latitude": 41.2,
+      "longitude": 32.63333
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/QMVjbUBH7Q7XHKcK9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223455"
+    }
+  },
+  "79": {
+    "name": "Kilis",
+    "population": 145826,
+    "coordinates": {
+      "latitude": 36.71667,
+      "longitude": 37.11667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/4qRGCoNwMNn9BJ8G8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223140"
+    }
+  },
+  "80": {
+    "name": "Osmaniye",
+    "population": 553012,
+    "coordinates": {
+      "latitude": 37.06667,
+      "longitude": 36.25
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/UVsA8GVQDsxjUysN9",
+      "openStreetMap": "https://www.openstreetmap.org/relation/167232"
+    }
+  },
+  "81": {
+    "name": "Düzce",
+    "population": 400976,
+    "coordinates": {
+      "latitude": 40.83333,
+      "longitude": 31.16667
+    },
+    "maps": {
+      "googleMaps": "https://goo.gl/maps/ypKm6p456SRRkSCd8",
+      "openStreetMap": "https://www.openstreetmap.org/relation/223460"
+    }
+  }
+}

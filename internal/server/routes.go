@@ -2,18 +2,14 @@ package server
 
 import (
 	"auth-api/internal/application"
-	"auth-api/internal/util"
 	"fmt"
-	"log/slog"
-	"net/http"
-
 	validation "github.com/go-playground/validator/v10"
 	"github.com/gofiber/contrib/otelfiber/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/propagation"
+	"log/slog"
+	"net/http"
 )
 
 func (s *Server) RegisterRoutes() {
@@ -23,16 +19,18 @@ func (s *Server) RegisterRoutes() {
 
 	r.Post("/register", s.Register)
 	r.Post("/login", s.Login)
+	//r.Post("/refresh", s.Refresh)
+	//r.Post("/logout", s.Logout)
 
 }
 
 // TODO: check status codes
-// TODO: a conventional respone structure
+// TODO: a conventional response structure
 func (s *Server) Register(c *fiber.Ctx) error {
 	ctx := c.UserContext()
 
-	ctx, span := util.StartSpan(ctx)
-	defer span.End()
+	//ctx, span := util.StartSpan(ctx)
+	//defer span.End()
 
 	req := &application.UserRegisterRequest{}
 
@@ -53,7 +51,7 @@ func (s *Server) Register(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).SendString(err.Error())
 	}
 
-	return c.Status(201).JSON(jwt.ToResponse())
+	return c.Status(201).JSON(jwt)
 }
 
 // TODO: check status codes
@@ -61,11 +59,11 @@ func (s *Server) Register(c *fiber.Ctx) error {
 func (s *Server) Login(c *fiber.Ctx) error {
 	ctx := c.UserContext()
 
-	otel.GetTextMapPropagator().Extract(ctx, propagation.HeaderCarrier(c.GetReqHeaders()))
-	ctx, span := util.StartSpan(ctx)
-	defer span.End()
+	//otel.GetTextMapPropagator().Extract(ctx, propagation.HeaderCarrier(c.GetReqHeaders()))
+	//ctx, span := util.StartSpan(ctx)
+	//defer span.End()
 
-	span.SetAttributes(attribute.String("login", "login"))
+	//span.SetAttributes(attribute.String("login", "login"))
 	req := &application.UserLoginRequest{}
 
 	if err := c.BodyParser(req); err != nil {
@@ -85,5 +83,5 @@ func (s *Server) Login(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).SendString(err.Error())
 	}
 
-	return c.Status(200).JSON(jwt.ToResponse())
+	return c.Status(200).JSON(jwt)
 }

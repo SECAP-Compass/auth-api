@@ -31,11 +31,8 @@ func NewTokenService(
 	}
 }
 
-func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (*domain.Jwt, error) {
-	ctx, span := util.StartSpan(ctx)
-	defer span.End()
-
-	user := domain.NewUser(r.Email, r.Password, r.Authority)
+func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (map[string]string, error) {
+	user := domain.NewUser(r.Email, r.Password, r.Authority, r.CityId)
 
 	if _, err := s.userQueryRepository.FindByEmail(ctx, r.Email); err == nil {
 		return nil, fmt.Errorf("user already exists with email %s", r.Email)
@@ -56,10 +53,10 @@ func (s *TokenService) Register(ctx context.Context, r *UserRegisterRequest) (*d
 		return nil, err
 	}
 
-	return jwt, nil
+	return jwt.ToResponse(), nil
 }
 
-func (s *TokenService) Login(ctx context.Context, r *UserLoginRequest) (*domain.Jwt, error) {
+func (s *TokenService) Login(ctx context.Context, r *UserLoginRequest) (map[string]string, error) {
 	ctx, span := util.StartSpan(ctx)
 	defer span.End()
 
@@ -93,7 +90,7 @@ func (s *TokenService) Login(ctx context.Context, r *UserLoginRequest) (*domain.
 	if err = s.saveJtiRecord(ctx, jwt); err != nil {
 		return nil, err
 	}
-	return jwt, nil
+	return jwt.ToResponse(), nil
 }
 
 func (s *TokenService) generateJwt(ctx context.Context) (*domain.Jwt, error) {
@@ -107,7 +104,9 @@ func (s *TokenService) generateJwt(ctx context.Context) (*domain.Jwt, error) {
 		return nil, err
 	}
 
-	return &domain.Jwt{Jwt: jwt}, nil
+	return &domain.Jwt{
+		Jwt: jwt,
+	}, nil
 }
 
 func (s *TokenService) saveJtiRecord(ctx context.Context, jwt *domain.Jwt) error {

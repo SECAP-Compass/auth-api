@@ -22,3 +22,7 @@ type IJtiRecordCommandRepository interface {
 	Store(context.Context, *JtiRecord) error
 	Delete(context.Context, string) error
 }
+
+type ICityQueryRepository interface {
+	FindByID(context.Context, uint) (*City, error)
+}

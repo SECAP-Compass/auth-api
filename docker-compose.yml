@@ -20,29 +20,29 @@ services:
   #     - OTLP_ENDPOINT=jaeger:4318
   
   ## How to use otel-collector?
-  otel-collector:
-    image: otel/opentelemetry-collector-dev:latest
-    ports:
-
-      - 55680:55680
-  jaeger:
-    image: jaegertracing/all-in-one:latest
-    container_name: jaeger
-    environment:
-      COLLECTOR_ZIPKIN_HOST_PORT: :9411
-    ports:
-      - 16686:16686 
-      - 4318:4318
-      - 4317:4317
-      - 9411:9411
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - 3000:3000
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+#  otel-collector:
+#    image: otel/opentelemetry-collector-dev:latest
+#    ports:
+#
+#      - 55680:55680
+#  jaeger:
+#    image: jaegertracing/all-in-one:latest
+#    container_name: jaeger
+#    environment:
+#      COLLECTOR_ZIPKIN_HOST_PORT: :9411
+#    ports:
+#      - 16686:16686
+#      - 4318:4318
+#      - 4317:4317
+#      - 9411:9411
+#
+#  grafana:
+#    image: grafana/grafana:latest
+#    ports:
+#      - 3000:3000
+#    environment:
+#      - GF_SECURITY_ADMIN_USER=admin
+#      - GF_SECURITY_ADMIN_PASSWORD=admin
   postgres:
     image: postgres:alpine
     environment:

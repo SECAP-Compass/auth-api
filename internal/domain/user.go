@@ -11,15 +11,16 @@ type User struct {
 	Email     string `json:"email" gorm:"index:unique"`
 	Password  string `json:"password" `
 	Authority string `json:"authority"`
+	CityId    uint   `json:"cityId"`
 }
 
-func NewUser(email, password, authority string) *User {
-
-	cryptedPassword := bcrpytPassword(password)
+func NewUser(email, password, authority string, cityId uint) *User {
+	encryptedPassword := bcrpytPassword(password)
 	return &User{
 		Email:     email,
-		Password:  cryptedPassword,
+		Password:  encryptedPassword,
 		Authority: authority,
+		CityId:    cityId,
 	}
 }
 
@@ -29,9 +30,9 @@ func (u *User) ComparePassword(password string) bool {
 }
 
 func bcrpytPassword(password string) string {
-	cryptedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
+	encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
 	if err != nil {
 		panic(err)
 	}
-	return string(cryptedPassword)
+	return string(encryptedPassword)
 }
