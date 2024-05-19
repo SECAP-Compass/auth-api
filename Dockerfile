@@ -64,9 +64,10 @@ USER appuser
 
 # Copy the executable from the "build" stage.
 COPY --from=build /bin/server /bin/
+COPY ./config /config
 
 # Expose the port that the application listens on.
-EXPOSE 8080
+EXPOSE 8000
 
 # What the container should run when it is started.
 ENTRYPOINT [ "/bin/server" ]

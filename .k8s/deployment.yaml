@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secap-auth
+  namespace: secap-compass
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: secap-auth
+  template:
+    metadata:
+      labels:
+        app: secap-auth
+    spec:
+      containers:
+        - name: secap-auth
+          image: secap-auth:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+              name: http
+              protocol: TCP
+          env:
+            - name: DB_DATABASE
+              value: postgres
+            - name: DB_PASSWORD
+              value: admin
+            - name: DB_USERNAME
+              value: admin
+            - name: DB_HOST
+              value: auth-postgresql.persistence
+            - name: DB_PORT
+              value: "5432"
+          resources:
+            limits:
+              cpu: "50m"
+              memory: "50Mi"
+            requests:
+              cpu: "20m"
+              memory: "20Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: secap-auth
+  namespace: secap-compass
+spec:
+  selector:
+    app: secap-auth
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: ClusterIP
+

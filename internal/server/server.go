@@ -26,7 +26,12 @@ type Server struct {
 }
 
 func NewServer() *Server {
-	port, _ := strconv.Atoi(os.Getenv("PORT"))
+	p := os.Getenv("PORT")
+	if p == "" {
+		p = "8000"
+	}
+
+	port, _ := strconv.Atoi(p)
 
 	app := fiber.New()
 	initTracer()
